@@ -20,7 +20,7 @@ public class ClientUseCase implements IClientServicePort {
     public Client savaClient(Client client) {
         
         validateClienteFields(client);
-
+        //falta crear cuenta con tipó cliente 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodePassword = passwordEncoder.encode(client.getPassword());
         client.setPassword(encodePassword);
