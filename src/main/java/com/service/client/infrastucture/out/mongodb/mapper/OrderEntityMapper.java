@@ -1,16 +1,17 @@
 package com.service.client.infrastucture.out.mongodb.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 
 import com.service.client.domain.model.order.Order;
 import com.service.client.infrastucture.out.mongodb.entity.EntityOrder;
 
-@Mapper(componentModel ="spring")
+@Mapper(componentModel = "spring")
 public interface OrderEntityMapper {
-    OrderEntityMapper INSTANCE = Mappers.getMapper(OrderEntityMapper.class);
 
+    @Mapping(source = "idRestaurant", target = "idRestaurantLong")
     EntityOrder toEntityOrder(Order order);
+
+    @Mapping(source = "idRestaurantLong", target = "idRestaurant")
     Order toOrder(EntityOrder entityOrder);
 }
-

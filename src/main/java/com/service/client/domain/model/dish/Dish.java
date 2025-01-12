@@ -5,7 +5,7 @@ public class Dish {
     private Long id;
     private DishInfo dishInfo;
     private RestaurantAssociation restaurantAssociation;
-    private Boolean active;
+    private Boolean active = true;
 
     
     public Dish() {}
