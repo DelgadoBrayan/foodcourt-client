@@ -29,12 +29,7 @@ public class OrderController {
         return orderHandler.createOrder(orderDto);
     }
 
-    @PatchMapping("/{idOrder}/status")
-    public OrderDto updateOrderStatus(@PathVariable String idOrder, @RequestBody String status) {
-        return orderHandler.updateOrderStatus(idOrder, status);
-    }
-
-        @GetMapping("/{idOrder}")
+    @GetMapping("/{idOrder}")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable String idOrder) {
         OrderDto orderDto = orderHandler.findOrderById(idOrder);
         if (orderDto != null) {
@@ -51,5 +46,10 @@ public class OrderController {
             @RequestParam(required = false) String status,
             @RequestParam Long restaurantId) {
         return orderHandler.listOrders(page, size, status, restaurantId);
+    }
+    @PatchMapping("/{orderId}/assign")
+    public ResponseEntity<Void> assignEmployeeToOrder(@PathVariable String orderId, @RequestParam Long employeeId, @RequestParam Long restaurantId) {
+        orderHandler.assignEmployeeToOrder(orderId, employeeId, restaurantId);
+        return ResponseEntity.noContent().build();
     }
 }

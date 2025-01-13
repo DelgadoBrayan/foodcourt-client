@@ -10,18 +10,19 @@ public class Order {
     private Number quantity;
     private List<Long> dishes;
     private OrderStatus status;
+    private Long employeeAssignedId;
 
-    
     public Order(){}
-    public Order(String id, Long idRestaurant, Long idClient,Number quantity ,List<Long> dishes, OrderStatus status) {
+    public Order(String id, Long idRestaurant, Long idClient, Number quantity, List<Long> dishes, OrderStatus status,
+            Long employeeAssignedId) {
         this.id = id;
         this.idRestaurant = idRestaurant;
         this.idClient = idClient;
         this.quantity = quantity;
         this.dishes = dishes;
         this.status = status;
+        this.employeeAssignedId = employeeAssignedId;
     }
-
 
     public String getId() {return id;}
     public void setId(String id) {this.id = id;}
@@ -40,11 +41,14 @@ public class Order {
 
     public OrderStatus getStatus() {return status;}
     public void setStatus(OrderStatus estado) {this.status = estado;}
+
+    public Long getEmployeeAssignedId() {return employeeAssignedId;}
+    public void setEmployeeAssignedId(Long employeeAssignedId) {this.employeeAssignedId = employeeAssignedId;}
+    
     @Override
     public String toString() {
         return "Order [id=" + id + ", idRestaurant=" + idRestaurant + ", idClient=" + idClient + ", quantity="
                 + quantity + ", dishes=" + dishes + ", status=" + status + "]";
     }
-    
-    
+
 }
