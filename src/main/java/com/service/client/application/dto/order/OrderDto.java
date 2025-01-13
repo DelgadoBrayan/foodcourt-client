@@ -14,4 +14,5 @@ public class OrderDto {
     private Number quantity;
     private List<DishDto> dishes;
     private String status;
+    private Long employeeAssignedId;
 }

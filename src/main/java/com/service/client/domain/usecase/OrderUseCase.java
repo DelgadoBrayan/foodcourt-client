@@ -23,16 +23,6 @@ public class OrderUseCase implements IOrderServicePort {
     }
 
     @Override
-    public void updateOrderStatus(String orderId, String status) {
-        try {
-            OrderStatus orderStatus = OrderStatus.valueOf(status);
-            orderPersistencePort.updateOrderStatus(orderId, orderStatus);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidOrderException("Status not valid");
-        }
-    }
-
-    @Override
     public Order findOrderById(String id) {
         return orderPersistencePort.findOrderById(id);
     }
@@ -45,6 +35,19 @@ public class OrderUseCase implements IOrderServicePort {
         } catch (IllegalArgumentException e) {
             throw new InvalidOrderException("Status not valid");
         }
+    }
+
+    @Override
+    public void assignEmployeeToOrder(String orderId, Long employeeId, Long restaurantId) {
+        Order order = orderPersistencePort.findOrderById(orderId);
+
+        if (!order.getIdRestaurant().equals(restaurantId)) {
+            throw new InvalidOrderException("Employee does not belong to this restaurant");
+        }
+
+        order.setEmployeeAssignedId(employeeId);
+        order.setStatus(OrderStatus.IN_PROCESS);
+        orderPersistencePort.assignEmployeeToOrder(orderId, employeeId);
     }
    
 }

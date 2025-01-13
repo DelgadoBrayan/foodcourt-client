@@ -10,8 +10,10 @@ import com.service.client.infrastucture.out.mongodb.entity.EntityOrder;
 public interface OrderEntityMapper {
 
     @Mapping(source = "idRestaurant", target = "idRestaurantLong")
+    @Mapping(source = "employeeAssignedId", target = "employeeAssignedId")
     EntityOrder toEntityOrder(Order order);
 
     @Mapping(source = "idRestaurantLong", target = "idRestaurant")
+    @Mapping(source = "employeeAssignedId", target = "employeeAssignedId")
     Order toOrder(EntityOrder entityOrder);
 }

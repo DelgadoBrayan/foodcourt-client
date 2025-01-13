@@ -37,11 +37,6 @@ public class OrderHandler {
         return orderMapper.toOrderDto(newOrder);
     }
 
-    public OrderDto updateOrderStatus(String idOrder, String status) {
-        orderServicePort.updateOrderStatus(idOrder, status);
-        Order updatedOrder = orderServicePort.findOrderById(idOrder);
-        return orderMapper.toOrderDto(updatedOrder);
-    }
 
     public OrderDto findOrderById(String idOrder) {
         Order order = orderServicePort.findOrderById(idOrder);
@@ -71,6 +66,10 @@ public class OrderHandler {
         }
 
         return orderDto;
+    }
+
+    public void assignEmployeeToOrder(String orderId, Long employeeId, Long restaurantId) {
+        orderServicePort.assignEmployeeToOrder(orderId, employeeId, restaurantId);
     }
 
     private List<Dish> getDishesFromExternalServiceBatch(List<Long> dishIds) {

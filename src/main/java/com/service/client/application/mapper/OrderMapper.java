@@ -16,10 +16,12 @@ public interface OrderMapper {
 
     @Mapping(source = "status", target = "status", qualifiedByName = "mapOrderStatusToString")
     @Mapping(target = "dishes", ignore = true) 
+    @Mapping(source = "employeeAssignedId", target = "employeeAssignedId")
     OrderDto toOrderDto(Order order);
 
     @Mapping(source = "status", target = "status", qualifiedByName = "mapStringToOrderStatus")
     @Mapping(source = "dishes", target = "dishes", qualifiedByName = "mapDishDtosToIds")
+    @Mapping(source = "employeeAssignedId", target = "employeeAssignedId")
     Order toOrder(OrderDto orderDto);
 
     List<OrderDto> toOrderDtoList(List<Order> orders);

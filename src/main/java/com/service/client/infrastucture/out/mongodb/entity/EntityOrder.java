@@ -18,5 +18,5 @@ public class EntityOrder {
     private Number quantity;
     private List<Long> dishes;
     private OrderStatus status;
-
+    private Long employeeAssignedId;
 }

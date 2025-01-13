@@ -14,6 +14,7 @@ import com.service.client.infrastucture.out.mongodb.entity.EntityOrder;
 import com.service.client.infrastucture.out.mongodb.mapper.OrderEntityMapper;
 import com.service.client.infrastucture.out.mongodb.repository.OrderRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -29,17 +30,6 @@ public class OrderRepositoryAdapter implements IOrderPersistencePort {
         return orderEntityMapper.toOrder(savedEntityOrder);
     }
 
-    @Override
-    public void updateOrderStatus(String orderId, OrderStatus status) {
-        Optional<EntityOrder> entityOrderOptional = orderRepository.findById(orderId);
-        if (entityOrderOptional.isPresent()) {
-            EntityOrder entityOrder = entityOrderOptional.get();
-            entityOrder.setStatus(status);
-            orderRepository.save(entityOrder);
-        } else {
-            throw new InvalidOrderException("Order not found with ID: " + orderId);
-        }
-    }
 
     @Override
     public Order findOrderById(String id) {
@@ -51,6 +41,19 @@ public class OrderRepositoryAdapter implements IOrderPersistencePort {
     public List<Order> listOrders(int page, int size, OrderStatus status, Long restaurantId) {
         Page<EntityOrder> entityOrders = orderRepository.findByStatusAndIdRestaurantLong(status, restaurantId, PageRequest.of(page, size));
         return entityOrders.stream().map(orderEntityMapper::toOrder).toList();
+    }
+
+     @Override
+    public void assignEmployeeToOrder(String orderId, Long employeeId) {
+        Optional<EntityOrder> entityOrderOptional = orderRepository.findById(orderId);
+        if (entityOrderOptional.isPresent()) {
+            EntityOrder entityOrder = entityOrderOptional.get();
+            entityOrder.setEmployeeAssignedId(employeeId);
+            entityOrder.setStatus(OrderStatus.IN_PROCESS);
+            orderRepository.save(entityOrder);
+        } else {
+            throw new EntityNotFoundException("Order not found with id: " + orderId);
+        }
     }
 }
 
